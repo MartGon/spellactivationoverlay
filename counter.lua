@@ -52,7 +52,7 @@ function SAO.CheckCounterAction(self, spellID, auraID)
     end
 
     local isCounterUsable = IsUsableSpell(spellID);
-    local counterMustBeActivated = isCounterUsable and start == 0;
+    local counterMustBeActivated = isCounterUsable;
 
     if (not self.ActivatedCounters[spellID] and counterMustBeActivated) then
         -- Counter triggered but not shown yet: just do it!
@@ -64,23 +64,6 @@ function SAO.CheckCounterAction(self, spellID, auraID)
         self.ActivatedCounters[spellID] = nil;
         self:DeactivateOverlay(spellID);
         self:RemoveGlow(spellID);
-    end
-
-    if (isCounterUsable and start > 0) then
-        -- Counter could be usable, but CD prevents us to: try again in a few seconds
-        local endTime = start+duration;
-
-        if (not self.CounterRetryTimers[spellID] or self.CounterRetryTimers[spellID].endTime ~= endTime) then
-            if (self.CounterRetryTimers[spellID]) then
-                self.CounterRetryTimers[spellID]:Cancel();
-            end
-
-            local remainingTime = endTime-GetTime();
-            local delta = 0.05; -- Add a small delay to account for lags and whatnot
-            local retryFunc = function() self:CheckCounterAction(spellID, auraID); end;
-            self.CounterRetryTimers[spellID] = C_Timer.NewTimer(remainingTime+delta, retryFunc);
-            self.CounterRetryTimers[spellID].endTime = endTime;
-        end
     end
 end
 
