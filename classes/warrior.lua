@@ -8,6 +8,10 @@ local function registerClass(self)
     local overpower = 7384;
     self:RegisterAura("overpower", 0, overpower, nil, "", 0, 0, 0, 0, false, { (GetSpellInfo(overpower)) });
     self:RegisterCounter("overpower"); -- Must match name from above call
+	
+	local _execute = 5308;
+    self:RegisterAura("execute", 0, _execute, nil, "", 0, 0, 0, 0, false, { (GetSpellInfo(_execute)) });
+    self:RegisterCounter("execute"); -- Must match name from above call
 
     local revenge = 6572;
     self:RegisterAura("revenge", 0, revenge, nil, "", 0, 0, 0, 0, false, { (GetSpellInfo(revenge)) });

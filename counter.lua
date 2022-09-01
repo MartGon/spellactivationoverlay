@@ -59,7 +59,7 @@ function SAO.CheckCounterAction(self, spellID, auraID)
         self.ActivatedCounters[spellID] = true;
         self:ActivateOverlay(select(2, aura));
         self:AddGlow(spellID, {spellID}); -- Same spell ID, because there is no 'aura'
-    elseif (self.ActivatedCounters[spellID] and not counterMustBeActivated) then
+    elseif (self.ActivatedCounters[spellID] and not isCounterUsable) then
         -- Counter not triggered but still shown: hide it
         self.ActivatedCounters[spellID] = nil;
         self:DeactivateOverlay(spellID);
